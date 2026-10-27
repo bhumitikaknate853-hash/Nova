@@ -1,0 +1,124 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "displayName", "email", "createdAt", "updatedAt"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "A conversation session with an AI agent",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "agentId": { "type": "string" },
+        "lastMessage": { "type": "string" },
+        "messageCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title", "agentId", "lastMessage", "messageCount", "createdAt", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "An individual message in a chat session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "model", "system"] },
+        "content": { "type": "string" },
+        "agentId": { "type": "string" },
+        "hasImage": { "type": "boolean" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "sessionId", "role", "content", "agentId", "hasImage", "createdAt"]
+    },
+    "Memory": {
+      "title": "Memory",
+      "description": "User remembered preference, context, or instruction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "key": { "type": "string" },
+        "value": { "type": "string" },
+        "category": { "type": "string", "enum": ["preference", "context", "instruction", "fact"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "key", "value", "category", "createdAt", "updatedAt"]
+    },
+    "Creation": {
+      "title": "Creation",
+      "description": "Generated or edited creative studio asset",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "prompt": { "type": "string" },
+        "aspectRatio": { "type": "string" },
+        "style": { "type": "string" },
+        "status": { "type": "string", "enum": ["completed", "generating", "failed"] },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "prompt", "aspectRatio", "style", "status", "imageUrl", "createdAt"]
+    },
+    "UserPreference": {
+      "title": "UserPreference",
+      "description": "User application and agent preferences",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "voiceName": { "type": "string" },
+        "speechSpeed": { "type": "number" },
+        "language": { "type": "string" },
+        "theme": { "type": "string" },
+        "systemInstruction": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "voiceName", "speechSpeed", "language", "theme", "systemInstruction", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/users/{userId}/chat_sessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "User conversation sessions"
+    },
+    "/users/{userId}/chat_sessions/{sessionId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Messages belonging to a chat session"
+    },
+    "/users/{userId}/memories/{memoryId}": {
+      "schema": "Memory",
+      "description": "User memory facts and preferences"
+    },
+    "/users/{userId}/creations/{creationId}": {
+      "schema": "Creation",
+      "description": "AI-generated image studio assets"
+    },
+    "/users/{userId}/preferences/{preferenceId}": {
+      "schema": "UserPreference",
+      "description": "User preferences and system instructions"
+    }
+  }
+}

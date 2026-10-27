@@ -1,0 +1,6 @@
+{
+  "name": "NOVA AI",
+  "description": "Futuristic AI agent platform with multi-agent intelligence, voice assistant, creative studio, and vision analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
